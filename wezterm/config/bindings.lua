@@ -3,33 +3,29 @@ local platform = require('utils.platform')()
 local act = wezterm.action
 
 local mod = {}
+local leader = { key = 'Space', mods = 'CTRL' }
 
 if platform.is_mac then
    mod.SUPER = 'SUPER'
    mod.SUPER_REV = 'SUPER|CTRL'
-elseif platform.is_win then
-   mod.SUPER = 'ALT' -- to not conflict with Windows key shortcuts
-   mod.SUPER_REV = 'ALT|CTRL'
 end
 
 local keys = {
-   -- misc/useful --
-   { key = 'F1', mods = 'NONE', action = 'ActivateCopyMode' },
-   { key = 'F2', mods = 'NONE', action = act.ActivateCommandPalette },
-   { key = 'F3', mods = 'NONE', action = act.ShowLauncher },
-   { key = 'F4', mods = 'NONE', action = act.ShowTabNavigator },
-   { key = 'F11', mods = 'NONE', action = act.ToggleFullScreen },
-   { key = 'F12', mods = 'NONE', action = act.ShowDebugOverlay },
-   { key = 'f', mods = mod.SUPER, action = act.Search({ CaseInSensitiveString = '' }) },
-
    -- copy/paste --
    { key = 'c', mods = 'CTRL|SHIFT', action = act.CopyTo('Clipboard') },
    { key = 'v', mods = 'CTRL|SHIFT', action = act.PasteFrom('Clipboard') },
 
+   -- misc/useful --
+   { key = 'F2', mods = 'NONE', action = act.ActivateCommandPalette },
+   { key = 'F3', mods = 'NONE', action = act.ShowLauncher },
+   { key = 'F4', mods = 'NONE', action = act.ShowTabNavigator },
+   { key = 'F12', mods = 'NONE', action = act.ShowDebugOverlay },
+   { key = 'f', mods = mod.SUPER, action = act.Search({ CaseInSensitiveString = '' }) },
+
    -- tabs --
+
    -- tabs: spawn+close
    { key = 't', mods = mod.SUPER, action = act.SpawnTab('DefaultDomain') },
-   { key = 't', mods = mod.SUPER_REV, action = act.SpawnTab({ DomainName = 'WSL:Ubuntu' }) },
    { key = 'w', mods = mod.SUPER_REV, action = act.CloseCurrentTab({ confirm = false }) },
 
    -- tabs: navigation
@@ -39,10 +35,12 @@ local keys = {
    { key = ']', mods = mod.SUPER_REV, action = act.MoveTabRelative(1) },
 
    -- window --
+
    -- spawn windows
    { key = 'n', mods = mod.SUPER, action = act.SpawnWindow },
 
    -- panes --
+
    -- panes: split panes
    {
       key = '+',
@@ -54,21 +52,16 @@ local keys = {
       mods = mod.SUPER,
       action = act.SplitHorizontal({ domain = 'CurrentPaneDomain' }),
    },
-   {
-      key = [[-]],
-      mods = mod.SUPER_REV,
-      action = act.CloseCurrentPane({ confirm = true }),
-   },
 
    -- panes: zoom+close pane
    { key = 'z', mods = mod.SUPER_REV, action = act.TogglePaneZoomState },
    { key = 'w', mods = mod.SUPER, action = act.CloseCurrentPane({ confirm = false }) },
 
    -- panes: navigation
-   { key = 'k', mods = mod.SUPER_REV, action = act.ActivatePaneDirection('Up') },
-   { key = 'j', mods = mod.SUPER_REV, action = act.ActivatePaneDirection('Down') },
-   { key = 'h', mods = mod.SUPER_REV, action = act.ActivatePaneDirection('Left') },
-   { key = 'l', mods = mod.SUPER_REV, action = act.ActivatePaneDirection('Right') },
+   { key = 'k', mods = 'LEADER', action = act.ActivatePaneDirection('Up') },
+   { key = 'j', mods = 'LEADER', action = act.ActivatePaneDirection('Down') },
+   { key = 'h', mods = 'LEADER', action = act.ActivatePaneDirection('Left') },
+   { key = 'l', mods = 'LEADER', action = act.ActivatePaneDirection('Right') },
 
    -- panes: resize
    { key = 'UpArrow', mods = mod.SUPER_REV, action = act.AdjustPaneSize({ 'Up', 1 }) },
@@ -200,8 +193,8 @@ local mouse_bindings = {
 return {
    disable_default_key_bindings = true,
    disable_default_mouse_bindings = true,
-   leader = { key = 'Space', mods = 'CTRL|SHIFT' },
    keys = keys,
+   leader = leader,
    key_tables = key_tables,
    mouse_bindings = mouse_bindings,
 }
