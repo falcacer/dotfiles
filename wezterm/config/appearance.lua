@@ -1,6 +1,5 @@
 local wezterm = require('wezterm')
-local colors = require('colors.custom')
--- local fonts = require('config.fonts')
+local fonts = require('config.fonts')
 
 return {
    term = "xterm-256color",
@@ -10,8 +9,7 @@ return {
    webgpu_power_preference = 'HighPerformance',
 
    -- color scheme
-   -- colors = colors,
-   color_scheme = "Gruvbox dark, medium (base16)",
+     color_scheme = "tokyonight-storm",
 
    -- background
    window_background_opacity = 0.95,
@@ -54,8 +52,8 @@ return {
    integrated_title_button_style = "Windows",
    integrated_title_button_color = "auto",
    integrated_title_button_alignment = "Right",
-   initial_cols = 120,
-   initial_rows = 24,
+   initial_cols = 150,
+   initial_rows = 50,
    window_padding = {
       left = 5,
       right = 10,
