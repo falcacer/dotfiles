@@ -10,10 +10,15 @@ if platform.is_mac then
    mod.SUPER_REV = 'SUPER|CTRL'
 end
 
+if platform.is_linux then
+   mod.SUPER = 'CTRL'
+   mod.SUPER_REV = 'SUPER|CTRL'
+end
+
 local keys = {
    -- copy/paste --
-   { key = 'c', mods = 'CTRL|SHIFT', action = act.CopyTo('Clipboard') },
-   { key = 'v', mods = 'CTRL|SHIFT', action = act.PasteFrom('Clipboard') },
+   { key = 'c', mods = 'CTRL', action = act.CopyTo('Clipboard') },
+   { key = 'v', mods = 'CTRL', action = act.PasteFrom('Clipboard') },
 
    -- misc/useful --
    { key = 'F2', mods = 'NONE', action = act.ActivateCommandPalette },
@@ -26,7 +31,7 @@ local keys = {
 
    -- tabs: spawn+close
    { key = 't', mods = mod.SUPER, action = act.SpawnTab('DefaultDomain') },
-   { key = 'w', mods = mod.SUPER_REV, action = act.CloseCurrentTab({ confirm = false }) },
+   { key = 'w', mods = mod.SUPER, action = act.CloseCurrentTab({ confirm = false }) },
 
    -- tabs: navigation
    { key = '[', mods = mod.SUPER, action = act.ActivateTabRelative(-1) },
@@ -43,13 +48,13 @@ local keys = {
 
    -- panes: split panes
    {
-      key = '+',
-      mods = mod.SUPER,
+      key = '-',
+      mods = 'LEADER',
       action = act.SplitVertical({ domain = 'CurrentPaneDomain' }),
    },
    {
-      key = '-',
-      mods = mod.SUPER,
+      key = '\\',
+      mods = 'LEADER',
       action = act.SplitHorizontal({ domain = 'CurrentPaneDomain' }),
    },
 
