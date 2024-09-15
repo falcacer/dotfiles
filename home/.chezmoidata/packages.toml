@@ -1,0 +1,8 @@
+[packages]
+
+packages = [
+  "git",
+  "fzf",
+  "tmux",
+  "ripgrep",
+]
